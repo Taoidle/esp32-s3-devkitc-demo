@@ -42,6 +42,9 @@ int red_val = 255;
 int green_val = 0;
 int blue_val = 0;
 
+TaskHandle_t task_1;
+TaskHandle_t task_2;
+
 void setup()
 {
     Serial.begin(115200);
@@ -51,10 +54,11 @@ void setup()
     setup_ps2();
     setup_beep();
 
-    WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);//关闭低电压检测,避免无限重启
+    //关闭低电压检测,避免无限重启
+    //WRITE_PERI_REG(RTC_CNTL_BROWN_OUT_REG, 0);
 
-    xTaskCreatePinnedToCore(task_stick_beep, "Task_1", 10240, NULL, 1, NULL, 0);
-    xTaskCreatePinnedToCore(task_button_rgb, "Task_2", 10240, NULL, 1, NULL, 1);
+    xTaskCreatePinnedToCore(task_stick_beep, "Task_1", CONFIG_ESP_MINIMAL_SHARED_STACK_SIZE, NULL, 1, &task_1, 1);
+    xTaskCreatePinnedToCore(task_button_rgb, "Task_2", CONFIG_ESP_MINIMAL_SHARED_STACK_SIZE, NULL, 1, &task_2, 1);
 
 }
 
