@@ -13,6 +13,9 @@ set(CMAKE_CXX_COMPILER_WORKS 1)
 project("esp32-s3-devkitc-demo" C CXX)
 
 include(CMakeListsPrivate.txt)
+include_directories(.pio/libdeps/esp32-s3-devkitc-1/TFT_eSPI)
+include_directories(.pio/libdeps/esp32-s3-devkitc-1/JPEGDecoder/src)
+include_directories(.pio/libdeps/esp32-s3-devkitc-1/GUIslice/src)
 
 if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/CMakeListsUser.txt)
 include(CMakeListsUser.txt)
